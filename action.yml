@@ -21,12 +21,11 @@ runs:
   steps:
     - name: Checkout the latest release
       uses: actions/checkout@v3.1.0
-    - name: Create a git archive of the release in style of name-tag.zip
-      run: git archive --format=zip --output ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip ${{ inputs.release-tag }}
+    - name: Creating a hashed git archive of the release in style of name-tag.zip
       shell: bash
-    - name: Generate the hash of the release into a txt
-      run: sha256sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
-      shell: bash
+      run: |
+        git archive --format=zip --output ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip ${{ inputs.release-tag }}
+        sha256sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
     - name: Upload both files as artifacts to the release
       uses: softprops/action-gh-release@v0.1.14
       with:
