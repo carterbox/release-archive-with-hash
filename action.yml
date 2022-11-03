@@ -25,11 +25,11 @@ runs:
       run: git archive --format=zip --output ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip ${{ inputs.release-tag }}
       shell: bash
     - name: Generate the hash of the release into a txt
-      run: sha245sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha245sum.txt
+      run: sha256sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
       shell: bash
     - name: Upload both files as artifacts to the release
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: |
-          ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha245sum.txt
+          ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
           ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip
