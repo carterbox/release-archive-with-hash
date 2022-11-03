@@ -1,34 +1,48 @@
 name: 'Release archive with hash'
 
+author: 'Daniel J. Ching'
+
 description: >
-  Uploads a source archive and hash at every release.
+  Upload a source archive and hash at every tagged release.
 
   GitHub source archives are generated on demand and not guaranteed to have a
-  constant hash. This is a problem when you try to verify that old releases
-  have not changed. This tool uploads a release artifact that will have the
-  same hash in perpetuity and a text file containing the hash.
+  constant hash. This is a problem when you try to verify that old releases have
+  not changed. This tool uploads a release archive (that will have the same hash
+  in perpetuity regardless of GitHubs archive cache invalidation) and a text file
+  containing the hash of the archive.
 
 inputs:
+
   release-tag:
     description: 'The tag of the release to be uploaded.'
     default: ${{ github.ref_name }}
+
   project-name:
     description: 'The name of the project.'
     default: ${{ github.event.repository.name }}
 
 runs:
+
   using: "composite"
+
   steps:
+
     - name: Checkout the latest release
-      uses: actions/checkout@v3.1.0
+      uses: actions/checkout@v3
+
     - name: Creating a hashed git archive of the release in style of name-tag.zip
       shell: bash
       run: |
         git archive --format=zip --output ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip ${{ inputs.release-tag }}
         sha256sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
+
     - name: Upload both files as artifacts to the release
       uses: softprops/action-gh-release@v0.1.14
       with:
         files: |
           ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
           ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip
+
+branding:
+  icon: lock
+  color: gray-dark
