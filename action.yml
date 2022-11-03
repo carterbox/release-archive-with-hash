@@ -20,7 +20,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout the latest release
-      uses: actions/checkout@v3.0
+      uses: actions/checkout@v3.1.0
     - name: Create a git archive of the release in style of name-tag.zip
       run: git archive --format=zip --output ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip ${{ inputs.release-tag }}
       shell: bash
@@ -28,7 +28,7 @@ runs:
       run: sha245sum ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip > ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha245sum.txt
       shell: bash
     - name: Upload both files as artifacts to the release
-      uses: softprops/actions-gh-release@v0.1
+      uses: softprops/actions-gh-release@v0.1.14
       with:
         files: |
           ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha245sum.txt
