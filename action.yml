@@ -11,7 +11,7 @@ description: >
 inputs:
   release-tag:
     description: 'The tag of the release to be uploaded.'
-    default: 'main'
+    default: ${{ github.ref_name }}
   project-name:
     description: 'The name of the project.'
     default: ${{ github.event.repository.name }}
