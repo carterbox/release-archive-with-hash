@@ -2,10 +2,13 @@
 Upload a source archive and hash at every tagged release.
 
 GitHub source archives are generated on demand and not guaranteed to have a
-constant hash. This is a problem when you try to verify that old releases have
-not changed. This tool uploads a release archive (that will have the same hash
-in perpetuity regardless of GitHubs archive cache invalidation) and a text file
-containing the hash of the archive.
+consistent hash; e.g. a source archive at a specific commit may have a
+different hash 6 months from now! This is a problem when trying to verify that
+old releases have not changed.
+
+This tool uploads a release archive (that will have the same hash in perpetuity
+regardless of GitHub's source downloads cache invalidation schedule) and a text
+file containing the hash of the archive.
 
 
 ```yaml
