@@ -13,6 +13,11 @@ inputs:
   project-name:
     description: 'The name of the project.'
     default: ${{ github.event.repository.name }}
+  
+  token:
+    description: "Authorized secret GitHub Personal Access Token. Defaults to github.token"
+    required: false
+    default: ${{ github.token }}
 
 runs:
 
@@ -35,6 +40,7 @@ runs:
         files: |
           ${{ inputs.project-name }}-${{ inputs.release-tag }}-sha256sum.txt
           ${{ inputs.project-name }}-${{ inputs.release-tag }}.zip
+        token: ${{ inputs.token }}
 
 branding:
   icon: lock
