@@ -15,14 +15,17 @@ file containing the hash of the archive.
 name: Upload a source archive and hash at every tagged release
 
 on:
+  workflow_dispatch:
   push:
     tags:
     # Use pattern matching to only run on version release tags
-      - "v*.*.*"
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: carterbox/release-archive-with-hash@main
+      - uses: carterbox/release-archive-with-hash@v1
+        with:
+          token: ${{ secrets.AUTO_ARCHIVE_TOKEN }}
 ```
