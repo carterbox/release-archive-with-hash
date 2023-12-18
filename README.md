@@ -10,6 +10,10 @@ This tool uploads a release archive (that will have the same hash in perpetuity
 regardless of GitHub's source downloads cache invalidation schedule) and a text
 file containing the hash of the archive.
 
+This action requires an access token with the "read and write" repository
+"contents" permission because the action adds new files to a release. In the
+example below, this token is added to the repository secrets with the name
+"AUTO_ARCHIVE_TOKEN".
 
 ```yaml
 name: Upload a source archive and hash at every tagged release
